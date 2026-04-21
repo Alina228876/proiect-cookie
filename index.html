@@ -1,72 +1,115 @@
 index.html
 <!DOCTYPE html>
-<html>
+<html lang="ro">
 <head>
-    <title>Cookie Alina Gordon</title>
-</head>
-<body>
-    
-<h1>Lab 8 si 9 Cookies</h1>
-
-    
-<script>
-    // 1. SETARE COOKIE simplu
-    function setCookie() {
-        document.cookie = "user=Alina; path=/";
-        alert("Cookie 'user' setat!");
-    }
-
-    // 2. SETARE COOKIE cu expirare
-    function setCookieWithExpiry() {
-        const d = new Date();
-        d.setTime(d.getTime() + (24*60*60*1000)); // 1 zi
-        document.cookie = "session=activ; expires=" + d.toUTCString() + "; path=/";
-        alert("Cookie cu expirare setat!");
-    }
-
-    // 3. CITIRE COOKIE
-    function getCookies() {
-        alert("Toate cookie-urile:\n" + document.cookie);
-    }
-
-    // 4. CAUTARE COOKIE specific
-    function getUserCookie() {
-        let cookies = document.cookie.split("; ");
-        let user = cookies.find(c => c.startsWith("user="));
-        alert(user ? user : "Nu există cookie 'user'");
-    }
-
-    // 5. MODIFICARE COOKIE
-    function updateCookie() {
-        document.cookie = "user=AlinaUpdated; path=/";
-        alert("Cookie modificat!");
-    }
-
-    // 6. ȘTERGERE COOKIE
-    function deleteCookie() {
-        document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        alert("Cookie șters!");
-    }
-
-    // 7. COOKIE multiple 
-    function setMultiple() {
-        document.cookie = "session=" + encodeURIComponent("test GDPR") + "; path=/";
-        document.cookie = "favorite_task=" + encodeURIComponent("collect Data") + "; path=/";
-        alert("2 cookie-uri create!");
-}
-</script>
-
-<br>
-
-<button onclick="setCookie()">Set Cookie</button><br><br>
-<button onclick="setCookieWithExpiry()">Set Cookie cu expirare</button><br><br>
-<button onclick="getCookies()">Afișează toate cookie-urile</button><br><br>
-<button onclick="getUserCookie()">Caută cookie 'user'</button><br><br>
-<button onclick="updateCookie()">Modifică cookie</button><br><br>
-<button onclick="deleteCookie()">Șterge cookie</button><br><br>
-<button onclick="setMultiple()">Creează 2 cookie-uri</button>
+<meta charset="UTF-8">
+<title>Lab Cookie Alina Gordon</title>
  
-    
-
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+ 
+    h1 {
+        text-align: center;
+    }
+ 
+    .section {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #ccc;
+    }
+ 
+    button {
+        margin-right: 5px;
+        margin-top: 5px;
+    }
+ 
+    .output {
+        margin-top: 10px;
+        min-height: 20px;
+    }
+</style>
+ 
+<script>
+    function setCookies() {
+        document.cookie = "test1=hello";
+        document.cookie = "test2=world";
+    }
+ 
+    function showCookies() {
+        document.getElementById("out1").innerText = document.cookie;
+    }
+ 
+    function clearCookies() {
+        document.cookie = "test1=; max-age=0";
+        document.cookie = "test2=; max-age=0";
+    }
+ 
+    function getTest2() {
+        let cookies = document.cookie.split(';');
+        for (let c of cookies) {
+            let [k, v] = c.trim().split('=');
+            if (k === "test2") {
+                document.getElementById("out2").innerText = v;
+                return;
+            }
+        }
+        document.getElementById("out2").innerText = "nu există";
+    }
+ 
+    function runOnce() {
+        alert("Acțiune executată");
+    }
+ 
+    function resetCookie() {
+        document.cookie = "test1=reset; max-age=3600";
+    }
+ 
+    function checkCookie() {
+        let exists = document.cookie.includes("test1");
+        document.getElementById("out5").innerText = exists ? "EXISTĂ" : "NU EXISTĂ";
+    }
+</script>
+ 
+</head>
+ 
+<body>
+ 
+<h1>Lab Cookie Alina Gordon</h1>
+ 
+<div class="section">
+<h3>1. Setarea și afișarea cookie-urilor</h3>
+<button onclick="setCookies()">Setează</button>
+<button onclick="showCookies()">Afișează</button>
+<button onclick="clearCookies()">Curăță</button>
+<div class="output" id="out1"></div>
+</div>
+ 
+<div class="section">
+<h3>2. Obținerea unei valori specifice</h3>
+<button onclick="getTest2()">Obține test2</button>
+<button onclick="clearCookies()">Curăță</button>
+<div class="output" id="out2"></div>
+</div>
+ 
+<div class="section">
+<h3>3. Acțiune o singură dată</h3>
+<button onclick="runOnce()">Execută</button>
+</div>
+ 
+<div class="section">
+<h3>4. Resetarea cookie-ului</h3>
+<button onclick="resetCookie()">Resetează</button>
+</div>
+ 
+<div class="section">
+<h3>5. Verificare cookie</h3>
+<button onclick="checkCookie()">Verifică</button>
+<button onclick="clearCookies()">Curăță</button>
+<div class="output" id="out5"></div>
+</div>
+ 
 </body>
 </html>
