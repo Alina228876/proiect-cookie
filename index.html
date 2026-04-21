@@ -4,112 +4,132 @@ index.html
 <head>
 <meta charset="UTF-8">
 <title>Lab Cookie Alina Gordon</title>
- 
+
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-    }
- 
-    h1 {
-        text-align: center;
-    }
- 
-    .section {
-        margin-bottom: 25px;
-        padding-bottom: 15px;
-        border-bottom: 1px solid #ccc;
-    }
- 
-    button {
-        margin-right: 5px;
-        margin-top: 5px;
-    }
- 
-    .output {
-        margin-top: 10px;
-        min-height: 20px;
-    }
+body {
+    font-family: Arial;
+    margin: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.section {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+input {
+    margin: 5px;
+}
+
+button {
+    margin: 5px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+}
 </style>
- 
+
 <script>
-    function setCookies() {
-        document.cookie = "test1=hello";
-        document.cookie = "test2=world";
+
+// SET cookie cu expirare
+function setCookie(name, value, days = 1) {
+    let d = new Date();
+    d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+    document.cookie = `${name}=${value}; expires=${d.toUTCString()}; path=/`;
+}
+
+// citire cookie-uri într-un obiect
+function getCookies() {
+    let cookies = {};
+    document.cookie.split(";").forEach(c => {
+        let [k, v] = c.trim().split("=");
+        if (k) cookies[k] = v;
+    });
+    return cookies;
+}
+
+// afișare în tabel
+function renderCookies() {
+    let cookies = getCookies();
+    let html = "<tr><th>Nume</th><th>Valoare</th><th>Acțiune</th></tr>";
+
+    for (let k in cookies) {
+        html += `
+        <tr>
+            <td>${k}</td>
+            <td>${cookies[k]}</td>
+            <td><button onclick="deleteCookie('${k}')">Șterge</button></td>
+        </tr>`;
     }
- 
-    function showCookies() {
-        document.getElementById("out1").innerText = document.cookie;
+
+    document.getElementById("table").innerHTML = html;
+}
+
+// adăugare din input
+function addCookie() {
+    let name = document.getElementById("name").value;
+    let value = document.getElementById("value").value;
+    let days = document.getElementById("days").value || 1;
+
+    if (!name) {
+        alert("Introdu numele cookie-ului");
+        return;
     }
- 
-    function clearCookies() {
-        document.cookie = "test1=; max-age=0";
-        document.cookie = "test2=; max-age=0";
-    }
- 
-    function getTest2() {
-        let cookies = document.cookie.split(';');
-        for (let c of cookies) {
-            let [k, v] = c.trim().split('=');
-            if (k === "test2") {
-                document.getElementById("out2").innerText = v;
-                return;
-            }
-        }
-        document.getElementById("out2").innerText = "nu există";
-    }
- 
-    function runOnce() {
-        alert("Acțiune executată");
-    }
- 
-    function resetCookie() {
-        document.cookie = "test1=reset; max-age=3600";
-    }
- 
-    function checkCookie() {
-        let exists = document.cookie.includes("test1");
-        document.getElementById("out5").innerText = exists ? "EXISTĂ" : "NU EXISTĂ";
-    }
+
+    setCookie(name, value, days);
+    renderCookies();
+}
+
+// ștergere cookie
+function deleteCookie(name) {
+    document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    renderCookies();
+}
+
+// afișează cookie brut
+function showAll() {
+    document.getElementById("out").innerText = document.cookie;
+}
+
+window.onload = renderCookies;
+
 </script>
- 
+
 </head>
- 
+
 <body>
- 
+
 <h1>Lab Cookie Alina Gordon</h1>
- 
+
 <div class="section">
-<h3>1. Setarea și afișarea cookie-urilor</h3>
-<button onclick="setCookies()">Setează</button>
-<button onclick="showCookies()">Afișează</button>
-<button onclick="clearCookies()">Curăță</button>
-<div class="output" id="out1"></div>
+<h3>Adaugă cookie</h3>
+
+<input id="name" placeholder="nume">
+<input id="value" placeholder="valoare">
+<input id="days" type="number" placeholder="zile">
+
+<button onclick="addCookie()">Adaugă</button>
+<button onclick="showAll()">Afișează brut</button>
+
+<div id="out"></div>
 </div>
- 
+
 <div class="section">
-<h3>2. Obținerea unei valori specifice</h3>
-<button onclick="getTest2()">Obține</button>
-<button onclick="clearCookies()">Curăță</button>
-<div class="output" id="out2"></div>
+<h3>Cookie-uri existente</h3>
+<table id="table"></table>
 </div>
- 
-<div class="section">
-<h3>3. Acțiune o singură dată</h3>
-<button onclick="runOnce()">Execută</button>
-</div>
- 
-<div class="section">
-<h3>4. Resetarea cookie-ului</h3>
-<button onclick="resetCookie()">Resetează</button>
-</div>
- 
-<div class="section">
-<h3>5. Verificare cookie</h3>
-<button onclick="checkCookie()">Verifică</button>
-<button onclick="clearCookies()">Curăță</button>
-<div class="output" id="out5"></div>
-</div>
- 
+
 </body>
 </html>
