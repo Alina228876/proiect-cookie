@@ -2,22 +2,68 @@ index.html
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Cookie Demo</title>
+    <title>Cookie Demo Avansat</title>
 </head>
 <body>
 
-<h1>Test Cookies</h1>
+<h1>Demo Cookies (MDN)</h1>
 
 <script>
-    document.cookie = "session=test GDPR";
-    document.cookie = "favorite_task=collect Data";
+    // 1. SETARE COOKIE simplu
+    function setCookie() {
+        document.cookie = "user=Alina; path=/";
+        alert("Cookie 'user' setat!");
+    }
 
-    function alertCookie() {
-        alert(document.cookie);
+    // 2. SETARE COOKIE cu expirare
+    function setCookieWithExpiry() {
+        const d = new Date();
+        d.setTime(d.getTime() + (24*60*60*1000)); // 1 zi
+        document.cookie = "session=activ; expires=" + d.toUTCString() + "; path=/";
+        alert("Cookie cu expirare setat!");
+    }
+
+    // 3. CITIRE COOKIE
+    function getCookies() {
+        alert("Toate cookie-urile:\n" + document.cookie);
+    }
+
+    // 4. CAUTARE COOKIE specific
+    function getUserCookie() {
+        let cookies = document.cookie.split("; ");
+        let user = cookies.find(c => c.startsWith("user="));
+        alert(user ? user : "Nu există cookie 'user'");
+    }
+
+    // 5. MODIFICARE COOKIE
+    function updateCookie() {
+        document.cookie = "user=AlinaUpdated; path=/";
+        alert("Cookie modificat!");
+    }
+
+    // 6. ȘTERGERE COOKIE
+    function deleteCookie() {
+        document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        alert("Cookie șters!");
+    }
+
+    // 7. COOKIE multiple (din exercițiul tău)
+    function setMultiple() {
+        document.cookie = "session=" + encodeURIComponent("test GDPR") + "; path=/";
+        document.cookie = "favorite_task=" + encodeURIComponent("collect Data") + "; path=/";
+        alert("2 cookie-uri create!");
     }
 </script>
 
-<button onclick="alertCookie()">Afișează Cookies</button>
+<br>
+
+<button onclick="setCookie()">Set Cookie</button><br><br>
+<button onclick="setCookieWithExpiry()">Set Cookie cu expirare</button><br><br>
+<button onclick="getCookies()">Afișează toate cookie-urile</button><br><br>
+<button onclick="getUserCookie()">Caută cookie 'user'</button><br><br>
+<button onclick="updateCookie()">Modifică cookie</button><br><br>
+<button onclick="deleteCookie()">Șterge cookie</button><br><br>
+<button onclick="setMultiple()">Creează 2 cookie-uri (GDPR)</button>
 
 </body>
 </html>
