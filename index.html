@@ -53,14 +53,17 @@ index.html
         document.cookie = "favorite_task=" + encodeURIComponent("collect Data") + "; path=/";
         alert("2 cookie-uri create!");
     }
+    Max age
     function setCookieMaxAge() {
     document.cookie = "temp=123; max-age=60; path=/";
     alert("Cookie cu max-age setat (60 sec)");
 }
+    secure
     function setSecureCookie() {
     document.cookie = "secureTest=ok; path=/; SameSite=Strict";
     alert("Cookie Secure/SameSite setat");
 }
+    
     function getCookiesDecoded() {
     alert(decodeURIComponent(document.cookie));
 }
