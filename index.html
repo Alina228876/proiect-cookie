@@ -53,6 +53,17 @@ index.html
         document.cookie = "favorite_task=" + encodeURIComponent("collect Data") + "; path=/";
         alert("2 cookie-uri create!");
     }
+    function setCookieMaxAge() {
+    document.cookie = "temp=123; max-age=60; path=/";
+    alert("Cookie cu max-age setat (60 sec)");
+}
+    function setSecureCookie() {
+    document.cookie = "secureTest=ok; path=/; SameSite=Strict";
+    alert("Cookie Secure/SameSite setat");
+}
+    function getCookiesDecoded() {
+    alert(decodeURIComponent(document.cookie));
+}
 </script>
 
 <br>
@@ -64,6 +75,10 @@ index.html
 <button onclick="updateCookie()">Modifică cookie</button><br><br>
 <button onclick="deleteCookie()">Șterge cookie</button><br><br>
 <button onclick="setMultiple()">Creează 2 cookie-uri</button>
+    <button onclick="setCookieMaxAge()">Set Cookie max-age</button><br><br>
+    <button onclick="setSecureCookie()">Set Secure Cookie</button><br><br>
+    <button onclick="getCookiesDecoded()">Afișează cookie-uri decode</button><br><br>
+    
 
 </body>
 </html>
