@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cookie Demo</title>
+</head>
+<body>
+
+<h1>Test Cookies</h1>
+
+<script>
+    document.cookie = "session=test GDPR";
+    document.cookie = "favorite_task=collect Data";
+
+    function alertCookie() {
+        alert(document.cookie);
+    }
+</script>
+
+<button onclick="alertCookie()">Afișează Cookies</button>
+
+</body>
+</html>
